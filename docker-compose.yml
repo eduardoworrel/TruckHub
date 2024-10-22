@@ -1,0 +1,9 @@
+services:
+  api:
+   container_name: api
+   restart: always
+   ports:
+    - 7006:80
+   build:
+    context: ./src/
+    dockerfile: ./WebApi/Dockerfile

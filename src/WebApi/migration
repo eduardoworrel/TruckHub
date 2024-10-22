@@ -1,0 +1,2 @@
+dotnet ef migrations add "Start" --project ../Infrastructure
+dotnet ef database update --project ../Infrastructure
