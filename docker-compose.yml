@@ -3,7 +3,7 @@ services:
     container_name: api
     restart: always
     ports:
-      - 7006:8080
+      - 7007:8080
     build:
       context: ./Backend/src/
       dockerfile: ./WebApi/Dockerfile
