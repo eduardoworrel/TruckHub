@@ -30,11 +30,11 @@ Inicialização sem docker compose
 ```cmd
 cd TruckHub/Backend/src/WebApi
 mv appsettings.Example.json appsettings.json
-dotnet run // https://localhost:7006/swagger
+dotnet run # https://localhost:7006/swagger
 
 cd TruckHub/Frontend/
 npm install
-npm run dev // http://localhost:3039
+npm run dev # http://localhost:3039
 ```
 
 
