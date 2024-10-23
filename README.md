@@ -1,6 +1,6 @@
 # 🚛 TruckHub [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=eduardoworrel_TruckHub&metric=coverage)](https://sonarcloud.io/summary/new_code?id=eduardoworrel_TruckHub)
 
-Este projeto implementa o gerenciamento simples de caminhões.
+Este projeto implementa um gerenciamento simples de caminhões.
 
 ## Executar Projeto
 
@@ -16,7 +16,7 @@ cd TruckHub
 docker compose up -d
 ```
 
-Acesse [http://localhost:3039](http://localhost:3039)
+Então acesse: [http://localhost:3039](http://localhost:3039)
 
 🧪 Testes
 
@@ -41,7 +41,7 @@ npm run dev // http://localhost:3039
 ## Funcionalidades Principais
 
 - CRUD completo com adição e deleção em massa.
-- Testes unitários segregado por camadas. 
+- Testes unitários segregados por camadas. 
 - Integração front-end e back-end via API REST.
 
 ## Tecnologias
@@ -54,6 +54,9 @@ npm run dev // http://localhost:3039
 - React & Typescript
  - Material UI
  - Template de dashboard
+
+## Extras
+- Dashboard
 - Docker & Docker Compose
 - Github Actions
 - SonarCloud
