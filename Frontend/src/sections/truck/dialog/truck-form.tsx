@@ -51,7 +51,7 @@ export function TruckFormDialog({
   useEffect(() => {
     const fetchDefinitions = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API}/api/trucks/definitionsP`);
+        const response = await fetch(`${import.meta.env.VITE_API}/api/trucks/definitions`);
         const data: TruckDefinitions = await response.json();
         setDefinitions(data);
       } catch (error) {
