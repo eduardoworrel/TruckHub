@@ -1,5 +1,6 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
+import { CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { DashboardInfoResponse } from 'src/interfaces/truck';
 
@@ -18,10 +19,11 @@ export function OverviewAnalyticsView() {
     const handle = async () => {
       const request = await fetch('http://localhost:7006/api/trucks/dashboard');
       const result = await request.json();
+      setLoading(false);
       setData(result);
     };
     if (loading) {
-      setLoading(false);
+      
       handle();
     }
   }, [loading]);
@@ -55,13 +57,12 @@ export function OverviewAnalyticsView() {
   return (
     <DashboardContent maxWidth="xl">
       <Typography variant="h4" sx={{ mb: { xs: 3, md: 5 } }}>
-        Olá, Bem vindo de volta 👋
+      Olá, Bem vindo de volta {loading ? <CircularProgress size={22} /> : "👋"}
       </Typography>
+      
+      
       <Grid container spacing={3}>
-        {loading ? (
-          <></>
-        ) : (
-          <>
+        
             <Grid xs={12} sm={12} md={12}>
               <AnalyticsWidgetSummary
                 title="Total de caminhões"
@@ -92,8 +93,8 @@ export function OverviewAnalyticsView() {
                 }}
               />
             </Grid>
-          </>
-        )}
+       
+
       </Grid>
     </DashboardContent>
   );

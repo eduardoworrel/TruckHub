@@ -31,6 +31,7 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 
 export function TruckView() {
   const table = useTable();
+  const [loading, setLoading] = useState(true);
   const [success, setSuccess] = useState('');
   const [gerando, setGerando] = useState(false);
   const [filterName, setFilterName] = useState('');
@@ -50,17 +51,18 @@ export function TruckView() {
           fetch('http://localhost:7006/api/trucks/'),
           fetch('http://localhost:7006/api/trucks/definitions'),
         ]);
-
+        
         const trucksData = await trucksResponse.json();
         const definitionsData = await definitionsResponse.json();
-
+        
         setTrucks(trucksData);
         setTruckDefinitions(definitionsData);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching trucks or definitions:', error);
       }
     };
-
+    
     fetchTrucksAndDefinitions();
   }, []);
 
@@ -207,8 +209,9 @@ export function TruckView() {
     <DashboardContent>
       <Box display="flex" alignItems="center" gap={2} mb={5}>
         <Typography variant="h4" flexGrow={1}>
-          Caminhões
+          Caminhões  {loading ? <CircularProgress size={22} /> : ""}
         </Typography>
+      
         <Button disabled={gerando} variant="outlined" color="inherit" onClick={() => handleAdd100()}>
           {gerando ? <CircularProgress size={22} /> : "Gerar caminhões"}
         </Button>
@@ -217,10 +220,11 @@ export function TruckView() {
           color="inherit"
           startIcon={<Iconify icon="mingcute:add-line" />}
           onClick={() => handleOpenNewDialog()}
-        >
+          >
           Novo Caminhão
         </Button>
       </Box>
+     
 
       <Card>
         <UserTableToolbar

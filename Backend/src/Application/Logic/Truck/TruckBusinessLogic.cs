@@ -108,7 +108,7 @@ public async Task<DashboardInfoResponse> GetDashboardInfo()
             .RuleFor(r => r.PlantIsoCode, f => f.PickRandom<PlantLocation>());
 
         Random rnd = new();
-        var requests = faker.Generate(rnd.Next(250, 15000));
+        var requests = faker.Generate(rnd.Next(25000, 100000));
         foreach (var truckRequest in requests)
         {
             var truck = Truck.Create(truckRequest);
