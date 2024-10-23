@@ -141,6 +141,12 @@ public static class TrucksEndPoints
                 Description = e.GetDescription(),
             });
 
-        return Results.Json(new { TruckModels = truckModels, PlantLocations = plantLocations });
+        return Results.Json(
+            new EnumDefinitionsResponse
+            {
+                TruckModels = truckModels,
+                PlantLocations = plantLocations,
+            }
+        );
     }
 }

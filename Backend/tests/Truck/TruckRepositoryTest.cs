@@ -17,7 +17,7 @@ namespace tests
         private static TruckRepository CreateRepository()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString()) 
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             var context = new ApplicationDbContext(options);

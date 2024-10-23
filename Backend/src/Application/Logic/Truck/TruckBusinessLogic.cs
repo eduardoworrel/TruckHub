@@ -33,7 +33,7 @@ public sealed class TruckBusinessLogic(ITruckRepository _repository) : ITruckBus
                     truck.CreatedAt.Year,
                     truck.CreatedAt.Month,
                     truck.CreatedAt.Day,
-                    truck.CreatedAt.Hour, 
+                    truck.CreatedAt.Hour,
                     0,
                     0,
                     DateTimeKind.Local

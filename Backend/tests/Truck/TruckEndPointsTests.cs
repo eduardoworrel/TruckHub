@@ -257,7 +257,12 @@ namespace tests
         [Fact]
         public async Task FillDashboard_ShouldReturnOk_WithDashboardInfo()
         {
-            var dashboardInfo = new DashboardInfoResponse(1, [], [], []);
+            var dashboardInfo = new DashboardInfoResponse(
+                1,
+                [new PlantCount("a", 1)],
+                [new HourCount("b", 1)],
+                [new DetailedHourCount("c", "d", 1)]
+            );
 
             mockLogic.Setup(logic => logic.GetDashboardInfo()).ReturnsAsync(dashboardInfo);
 
@@ -278,6 +283,23 @@ namespace tests
             var result = await TrucksEndPoints.FillDashboard(mockLogic.Object);
 
             Assert.IsType<BadRequest<string>>(result);
+        }
+
+        [Fact]
+        public void GetEnumDefinitions_ShouldReturnCorrectTruckModelsAndPlantLocations()
+        {
+            // Act
+            var result =
+                (JsonHttpResult<EnumDefinitionsResponse>)TrucksEndPoints.GetEnumDefinitions();
+
+            var jsonResult = result.Value;
+            var truckModels = jsonResult!.TruckModels;
+            Assert.NotNull(truckModels);
+            Assert.Equal(Enum.GetValues(typeof(TruckModel)).Length, truckModels.Count());
+
+            var plantLocations = jsonResult.PlantLocations;
+            Assert.NotNull(plantLocations);
+            Assert.Equal(Enum.GetValues(typeof(PlantLocation)).Length, plantLocations.Count());
         }
     }
 }
