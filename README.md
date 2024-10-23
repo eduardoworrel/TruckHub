@@ -47,13 +47,13 @@ npm run dev # http://localhost:3039
 ## Tecnologias
 
 - .NET 8
- - Code First.
- - Entity Framework
- - Migratins
+    - Code First.
+    - Entity Framework
+    - Migratins
 - SQLite (banco de dados local)
 - React & Typescript
- - Material UI
- - Template de dashboard
+    - Material UI
+    - Template de dashboard
 
 ## Extras
 - Dashboard
