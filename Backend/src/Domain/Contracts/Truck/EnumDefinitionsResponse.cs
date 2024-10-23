@@ -1,4 +1,4 @@
-using Domain.Enumerables;
+namespace Domain.Contracts;
 
 public class EnumDefinitionsResponse
 {
