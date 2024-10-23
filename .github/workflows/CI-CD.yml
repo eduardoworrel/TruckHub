@@ -97,8 +97,8 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"eduardoworrel_TruckHub" /o:"eduardoworrel" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
-          dotnet build
-          dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+          dotnet build Backend/TruckHub.sln
+          dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover Backend/TruckHub.sln
            .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
   deploy_api:
