@@ -8,6 +8,9 @@ RUN npm install
 
 COPY . .
 
+RUN rm .env
+RUN mv .env.docker .env
+
 RUN npm run build
 
 FROM nginx:alpine

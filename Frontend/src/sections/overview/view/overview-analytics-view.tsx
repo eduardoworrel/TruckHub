@@ -17,7 +17,7 @@ export function OverviewAnalyticsView() {
 
   useEffect(() => {
     const handle = async () => {
-      const request = await fetch('http://localhost:7006/api/trucks/dashboard');
+      const request = await fetch(`${import.meta.env.VITE_API}/api/trucks/dashboard`);
       const result = await request.json();
       setLoading(false);
       setData(result);

@@ -48,8 +48,8 @@ export function TruckView() {
     const fetchTrucksAndDefinitions = async () => {
       try {
         const [trucksResponse, definitionsResponse] = await Promise.all([
-          fetch('http://localhost:7006/api/trucks/'),
-          fetch('http://localhost:7006/api/trucks/definitions'),
+          fetch(`${import.meta.env.VITE_API}/api/trucks/`),
+          fetch(`${import.meta.env.VITE_API}/api/trucks/definitions`),
         ]);
         
         const trucksData = await trucksResponse.json();
@@ -76,7 +76,7 @@ export function TruckView() {
 
   const handleDelete = async (ids: string[]) => {
     try {
-      const response = await fetch('http://localhost:7006/api/trucks/', {
+      const response = await fetch(`${import.meta.env.VITE_API}/api/trucks/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export function TruckView() {
     if(gerando === false)
     {
       setGerando(true);
-      const response = await fetch(`http://localhost:7006/api/trucks/generate`);
+      const response = await fetch(`${import.meta.env.VITE_API}/api/trucks/generate`);
       if (response.ok) {
         const data = await response.json();
         setSuccess(`${data.length} caminhões criados.`);
@@ -115,7 +115,7 @@ export function TruckView() {
     try {
       console.log(newTruckData);
       if (currentTruckToEdit) {
-        const response = await fetch(`http://localhost:7006/api/trucks/`, {
+        const response = await fetch(`${import.meta.env.VITE_API}/api/trucks`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ export function TruckView() {
           console.error('Failed to update truck');
         }
       } else {
-        const response = await fetch('http://localhost:7006/api/trucks', {
+        const response = await fetch(`${import.meta.env.VITE_API}/api/trucks`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
