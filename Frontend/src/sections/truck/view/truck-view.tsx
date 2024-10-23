@@ -9,6 +9,7 @@ import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
+import { CircularProgress } from '@mui/material';
 
 import type { TruckDefinitions, TruckFormState, TrucksResponse } from 'src/interfaces/truck';
 
@@ -27,9 +28,11 @@ import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../truck-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
+
 export function TruckView() {
   const table = useTable();
   const [success, setSuccess] = useState('');
+  const [gerando, setGerando] = useState(false);
   const [filterName, setFilterName] = useState('');
   const [trucks, setTrucks] = useState<TrucksResponse[]>([]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -85,7 +88,7 @@ export function TruckView() {
 
       setTrucks(trucks.filter((truck) => !ids.includes(truck.id)));
       table.reset();
-      setSuccess(ids.length === 1 ? 'Um caminhão removido.' : `${ids.length} caminhões removidos`);
+      setSuccess(ids.length === 1 ? '1 caminhão removido.' : `${ids.length} caminhões removidos`);
     } catch (error) {
       console.error('Error deleting trucks:', error);
     } finally {
@@ -94,11 +97,16 @@ export function TruckView() {
   };
 
   const handleAdd100 = async () => {
-    const response = await fetch(`http://localhost:7006/api/trucks/generate`);
-    if (response.ok) {
-      const data = await response.json();
-      setSuccess(`${data.length} caminhões criados.`);
-      setTrucks((prevTrucks) => [...data, ...prevTrucks]);
+    if(gerando === false)
+    {
+      setGerando(true);
+      const response = await fetch(`http://localhost:7006/api/trucks/generate`);
+      if (response.ok) {
+        const data = await response.json();
+        setSuccess(`${data.length} caminhões criados.`);
+        setTrucks((prevTrucks) => [...data, ...prevTrucks]);
+      }
+      setGerando(false);
     }
   };
   const handleFormSubmit = async (newTruckData: any) => {
@@ -201,8 +209,8 @@ export function TruckView() {
         <Typography variant="h4" flexGrow={1}>
           Caminhões
         </Typography>
-        <Button variant="outlined" color="inherit" onClick={() => handleAdd100()}>
-          Gerar 100 caminhões
+        <Button disabled={gerando} variant="outlined" color="inherit" onClick={() => handleAdd100()}>
+          {gerando ? <CircularProgress size={22} /> : "Gerar caminhões"}
         </Button>
         <Button
           variant="contained"
