@@ -14,19 +14,18 @@ namespace tests
 {
     public class TruckRepositoryTests
     {
-        private TruckRepository CreateRepository()
+        private static TruckRepository CreateRepository()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString()) // Banco de dados isolado para cada teste
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()) 
                 .Options;
 
             var context = new ApplicationDbContext(options);
             return new TruckRepository(context);
         }
 
-        private async Task SeedDatabase(TruckRepository repository)
+        private static async Task SeedDatabase(TruckRepository repository)
         {
-            // Populando o banco de dados com alguns dados de exemplo
             var trucks = new List<Truck>
             {
                 Truck.Create(

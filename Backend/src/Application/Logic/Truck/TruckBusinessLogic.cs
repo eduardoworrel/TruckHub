@@ -33,9 +33,10 @@ public sealed class TruckBusinessLogic(ITruckRepository _repository) : ITruckBus
                     truck.CreatedAt.Year,
                     truck.CreatedAt.Month,
                     truck.CreatedAt.Day,
-                    truck.CreatedAt.Hour, // Agrupando por hora completa
-                    0, // Minutos zerados para considerar apenas a hora cheia
-                    0
+                    truck.CreatedAt.Hour, 
+                    0,
+                    0,
+                    DateTimeKind.Local
                 ),
                 truck.Model,
             })
