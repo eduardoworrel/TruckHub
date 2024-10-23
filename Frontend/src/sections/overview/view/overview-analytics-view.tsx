@@ -16,7 +16,7 @@ export function OverviewAnalyticsView() {
 
   useEffect(() => {
     const handle = async () => {
-      const request = await fetch("http://localhost:7006/api/trucks/dashboard");
+      const request = await fetch('http://localhost:7006/api/trucks/dashboard');
       const result = await request.json();
       setData(result);
     };
@@ -28,16 +28,16 @@ export function OverviewAnalyticsView() {
 
   const now = new Date();
   const times: string[] = [];
-  for (let i = 0; i < 6; i+=1) {
+  for (let i = 0; i < 6; i += 1) {
     const date = new Date(now);
     date.setMinutes(0);
     date.setHours(date.getHours() - i);
-    times.unshift(date.toTimeString().slice(0, 5)); 
+    times.unshift(date.toTimeString().slice(0, 5));
   }
 
   const hourlyData: { [key: string]: number[] } = {};
 
-  (data?.detailedHourCounts ?? []).forEach(d => {
+  (data?.detailedHourCounts ?? []).forEach((d) => {
     if (!hourlyData[d.modelName]) {
       hourlyData[d.modelName] = Array(6).fill(0);
     }
@@ -47,7 +47,7 @@ export function OverviewAnalyticsView() {
     }
   });
 
-  const hourlySeries = Object.keys(hourlyData).map(team => ({
+  const hourlySeries = Object.keys(hourlyData).map((team) => ({
     name: team,
     data: hourlyData[team],
   }));
@@ -69,8 +69,8 @@ export function OverviewAnalyticsView() {
                 total={data?.total ?? 0}
                 icon={<img alt="icon" src="/assets/icons/glass/ic-glass-bag.svg" />}
                 chart={{
-                  categories: data?.hourCounts.map(e => e.time).reverse() ?? [],
-                  series: data?.hourCounts.map(e => e.count).reverse() ?? [],
+                  categories: data?.hourCounts.map((e) => e.time).reverse() ?? [],
+                  series: data?.hourCounts.map((e) => e.count).reverse() ?? [],
                 }}
               />
             </Grid>
@@ -87,7 +87,8 @@ export function OverviewAnalyticsView() {
               <AnalyticsCurrentVisits
                 title="Distribuição de Planta"
                 chart={{
-                  series: data?.plantCounts.map((e) => ({ label: e.country, value: e.count })) ?? []
+                  series:
+                    data?.plantCounts.map((e) => ({ label: e.country, value: e.count })) ?? [],
                 }}
               />
             </Grid>

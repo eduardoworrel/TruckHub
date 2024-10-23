@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import { TruckDefinitions, TruckFormState, TrucksResponse } from 'src/interfaces/truck';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -11,23 +10,26 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
+import type { TruckDefinitions, TruckFormState, TrucksResponse } from 'src/interfaces/truck';
+
 import { DashboardContent } from 'src/layouts/dashboard';
+
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+
+import ConfirmDelete from '../dialog/confirm-delete';
+import { SimpleDialog } from '../dialog/feedback';
+import { TruckFormDialog } from '../dialog/truck-form';
 import { TableNoData } from '../table-no-data';
 import { TruckTableRow } from '../truck-table-row';
 import { UserTableHead } from '../truck-table-head';
 import { TableEmptyRows } from '../table-empty-rows';
 import { UserTableToolbar } from '../truck-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
-import ConfirmDelete from '../dialog/confirm-delete';
-import { TruckFormDialog } from '../dialog/truck-form';
-
-
 
 export function TruckView() {
   const table = useTable();
-
+  const [success, setSuccess] = useState('');
   const [filterName, setFilterName] = useState('');
   const [trucks, setTrucks] = useState<TrucksResponse[]>([]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -35,7 +37,9 @@ export function TruckView() {
   const [currentTruckToEdit, setCurrentTruckToEdit] = useState<TruckFormState | null>(null);
   const [truckDefinitions, setTruckDefinitions] = useState<TruckDefinitions | null>(null);
 
-  // Fetch trucks and definitions
+  const handleCloseSuccess = () => {
+    setSuccess('');
+  };
   useEffect(() => {
     const fetchTrucksAndDefinitions = async () => {
       try {
@@ -74,32 +78,32 @@ export function TruckView() {
         },
         body: JSON.stringify(ids),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to delete trucks');
       }
 
       setTrucks(trucks.filter((truck) => !ids.includes(truck.id)));
       table.reset();
-      console.log('Deleted successfully:', ids.join(","));
+      setSuccess(ids.length === 1 ? 'Um caminhão removido.' : `${ids.length} caminhões removidos`);
     } catch (error) {
       console.error('Error deleting trucks:', error);
-    }finally{
-      
+    } finally {
       setOpenDeleteDialog(false);
     }
   };
 
   const handleAdd100 = async () => {
-    const response = await fetch(`http://localhost:7006/api/trucks/generate`)
-    if(response.ok){
+    const response = await fetch(`http://localhost:7006/api/trucks/generate`);
+    if (response.ok) {
       const data = await response.json();
-      setTrucks((prevTrucks) => [ ...data , ...prevTrucks,]);
+      setSuccess(`${data.length} caminhões criados.`);
+      setTrucks((prevTrucks) => [...data, ...prevTrucks]);
     }
-  }
+  };
   const handleFormSubmit = async (newTruckData: any) => {
     try {
-      console.log(newTruckData)
+      console.log(newTruckData);
       if (currentTruckToEdit) {
         const response = await fetch(`http://localhost:7006/api/trucks/`, {
           method: 'PUT',
@@ -108,42 +112,43 @@ export function TruckView() {
           },
           body: JSON.stringify({
             id: currentTruckToEdit.id,
-            model: newTruckData.model, 
+            model: newTruckData.model,
             manufacturingYear: newTruckData.manufacturingYear,
             chassisCode: newTruckData.chassisCode,
             color: newTruckData.color,
-            plantIsoCode: newTruckData.plantName, 
+            plantIsoCode: newTruckData.plantName,
           }),
         });
         if (response.ok) {
-
           const updatedTruck = await response.json();
           setTrucks((prevTrucks) =>
             prevTrucks.map((truck) =>
               truck.id === currentTruckToEdit.id ? { ...truck, ...updatedTruck } : truck
             )
           );
+          setSuccess('Caminhão atualizado.');
         } else {
           console.error('Failed to update truck');
         }
       } else {
-        const response = await fetch("http://localhost:7006/api/trucks", {
-          method: "POST",
+        const response = await fetch('http://localhost:7006/api/trucks', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: newTruckData.model, 
+            model: newTruckData.model,
             manufacturingYear: newTruckData.manufacturingYear,
             chassisCode: newTruckData.chassisCode,
             color: newTruckData.color,
-            plantIsoCode: newTruckData.plantName, 
+            plantIsoCode: newTruckData.plantName,
           }),
-      })
-        
+        });
+
         if (response.ok) {
           const createdTruck = await response.json();
-          setTrucks((prevTrucks) => [...prevTrucks, createdTruck]);
+          setSuccess('Caminhão criado.');
+          setTrucks((prevTrucks) => [createdTruck, ...prevTrucks]);
         } else {
           console.error('Failed to create truck');
         }
@@ -181,11 +186,11 @@ export function TruckView() {
 
     setCurrentTruckToEdit({
       id: truck.id,
-      model: modelDefinition.value, 
+      model: modelDefinition.value,
       manufacturingYear: truck.manufacturingYear,
       chassisCode: truck.chassisCode,
       color: truck.color,
-      plantName: plantDefinition.value, 
+      plantName: plantDefinition.value,
     });
     setOpenFormDialog(true);
   };
@@ -196,11 +201,7 @@ export function TruckView() {
         <Typography variant="h4" flexGrow={1}>
           Caminhões
         </Typography>
-        <Button
-          variant="outlined"
-          color="inherit"
-          onClick={() => handleAdd100()}
-        >
+        <Button variant="outlined" color="inherit" onClick={() => handleAdd100()}>
           Gerar 100 caminhões
         </Button>
         <Button
@@ -243,7 +244,7 @@ export function TruckView() {
                   { id: 'model', label: 'Modelo' },
                   { id: 'manufacturingYear', label: 'Ano de fabricação' },
                   { id: 'chassisCode', label: 'Código do chassi' },
-                  { id: 'color', label: 'Cor'},
+                  { id: 'color', label: 'Cor' },
                   { id: 'plantName', label: 'Planta' },
                   { id: '' },
                 ]}
@@ -303,6 +304,7 @@ export function TruckView() {
         handleDelete={handleDelete}
         idsToDelete={table.selected}
       />
+      <SimpleDialog text={success} onClose={handleCloseSuccess} />
     </DashboardContent>
   );
 }

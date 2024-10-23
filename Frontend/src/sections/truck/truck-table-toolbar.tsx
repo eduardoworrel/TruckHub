@@ -16,7 +16,12 @@ type UserTableToolbarProps = {
   onDelete?: () => void;
 };
 
-export function UserTableToolbar({ numSelected, filterName, onFilterName, onDelete }: UserTableToolbarProps) {
+export function UserTableToolbar({
+  numSelected,
+  filterName,
+  onFilterName,
+  onDelete,
+}: UserTableToolbarProps) {
   return (
     <Toolbar
       sx={{
@@ -39,7 +44,7 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName, onDele
           fullWidth
           value={filterName}
           onChange={onFilterName}
-          placeholder="Buscar caminhão..."
+          placeholder="Buscar código do chassi..."
           startAdornment={
             <InputAdornment position="start">
               <Iconify width={20} icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
@@ -49,14 +54,12 @@ export function UserTableToolbar({ numSelected, filterName, onFilterName, onDele
         />
       )}
 
-      {numSelected > 0 ? (
+      {numSelected > 0 && (
         <Tooltip title="Delete" onClick={onDelete}>
           <IconButton>
             <Iconify icon="solar:trash-bin-trash-bold" />
           </IconButton>
         </Tooltip>
-      ) : (
-        <></>
       )}
     </Toolbar>
   );

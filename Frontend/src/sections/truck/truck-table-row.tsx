@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 
-import { TruckDefinitions } from 'src/interfaces/truck';
+import type { TruckDefinitions } from 'src/interfaces/truck';
+
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import TableRow from '@mui/material/TableRow';
@@ -9,11 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
-import ReactCountryFlag from "react-country-flag"
+import ReactCountryFlag from 'react-country-flag';
 
-
-import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
+
 import ConfirmDelete from './dialog/confirm-delete';
 
 // ----------------------------------------------------------------------
@@ -32,12 +32,19 @@ type UserTableRowProps = {
   row: TruckProps;
   selected: boolean;
   onSelectRow: () => void;
-  onEdit: (truck: TruckProps) => void; 
-  onDelete: (ids: string[]) => void; 
+  onEdit: (truck: TruckProps) => void;
+  onDelete: (ids: string[]) => void;
   truckDefinitions: TruckDefinitions | null;
 };
 
-export function TruckTableRow({ row, selected, onSelectRow, onEdit, onDelete, truckDefinitions }: UserTableRowProps) {
+export function TruckTableRow({
+  row,
+  selected,
+  onSelectRow,
+  onEdit,
+  onDelete,
+  truckDefinitions,
+}: UserTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -51,15 +58,13 @@ export function TruckTableRow({ row, selected, onSelectRow, onEdit, onDelete, tr
   }, []);
 
   const handleDelete = async (ids: string[]) => {
-   
     onDelete(ids);
-    
   };
 
   const handleDeleteClick = () => {
     setSelectedIds([row.id]);
     setOpenDeleteDialog(true);
-    handleClosePopover(); 
+    handleClosePopover();
   };
 
   const handleEditClick = () => {
@@ -89,7 +94,13 @@ export function TruckTableRow({ row, selected, onSelectRow, onEdit, onDelete, tr
         <TableCell>{row.color} </TableCell>
 
         <TableCell>
-          <ReactCountryFlag countryCode={truckDefinitions?.plantLocations.filter(e=>e.description === row.plantName)[0].name ?? ''}/> {row.plantName}
+          <ReactCountryFlag
+            countryCode={
+              truckDefinitions?.plantLocations.filter((e) => e.description === row.plantName)[0]
+                .name ?? ''
+            }
+          />{' '}
+          {row.plantName}
         </TableCell>
 
         <TableCell align="right">
@@ -129,7 +140,9 @@ export function TruckTableRow({ row, selected, onSelectRow, onEdit, onDelete, tr
             },
           }}
         >
-          <MenuItem onClick={handleEditClick}> {/* Função de editar */}
+          <MenuItem onClick={handleEditClick}>
+            {' '}
+            {/* Função de editar */}
             <Iconify icon="solar:pen-bold" />
             Edit
           </MenuItem>

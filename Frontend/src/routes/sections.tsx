@@ -41,10 +41,9 @@ export function Router() {
       children: [
         { element: <HomePage />, index: true },
         { path: 'truck', element: <TruckPage /> },
-       
       ],
     },
-    
+
     {
       path: '404',
       element: <Page404 />,

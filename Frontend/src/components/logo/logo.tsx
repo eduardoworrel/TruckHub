@@ -31,8 +31,6 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
     const PRIMARY_MAIN = theme.vars.palette.primary.main;
     const PRIMARY_DARKER = theme.vars.palette.primary.dark;
 
-    
-
     const singleLogo = (
       <svg
         width="100%"

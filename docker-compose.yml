@@ -23,6 +23,12 @@ services:
     - 1433:1433
     volumes:
       - sql-storage:/var/opt/mssql
-  
+  frontend:
+    build:
+      context: ./Frontend
+    ports:
+      - "3039:80"
+    environment:
+      - NODE_ENV=production
 volumes:
   sql-storage:

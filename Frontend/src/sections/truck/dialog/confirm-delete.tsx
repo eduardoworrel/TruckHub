@@ -15,11 +15,16 @@ type ConfirmDeleteProps = {
   onClose: () => void;
 };
 
-export default function ConfirmDelete({ idsToDelete, handleDelete, open, onClose }: ConfirmDeleteProps) {
+export default function ConfirmDelete({
+  idsToDelete,
+  handleDelete,
+  open,
+  onClose,
+}: ConfirmDeleteProps) {
   const [checked, setChecked] = React.useState(false);
 
   const handleDeleteClick = () => {
-    handleDelete(idsToDelete); // Chama a função de deletar passando os IDs
+    handleDelete(idsToDelete);
     onClose();
   };
 
@@ -36,15 +41,11 @@ export default function ConfirmDelete({ idsToDelete, handleDelete, open, onClose
           {idsToDelete.length > 1
             ? `Você está prestes a deletar ${idsToDelete.length} caminhões. Esta ação é irremediável.`
             : `Deletar um caminhão é uma ação irremediável.`}
-          Tenha certeza de que deseja realizar esse procedimento antes de apertar em deletar permanentemente.
+          Tenha certeza de que deseja realizar esse procedimento antes de apertar em deletar
+          permanentemente.
         </DialogContentText>
         <FormControlLabel
-          control={
-            <Checkbox
-              checked={checked}
-              onChange={(e) => setChecked(e.target.checked)}
-            />
-          }
+          control={<Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)} />}
           label="Eu entendo que esta ação não pode ser desfeita."
         />
       </DialogContent>

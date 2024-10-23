@@ -16,7 +16,6 @@ import { varAlpha } from 'src/theme/styles';
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 
-
 import type { WorkspacesPopoverProps } from '../components/workspaces-popover';
 
 // ----------------------------------------------------------------------
@@ -117,7 +116,6 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
 
   return (
     <>
-      
       <h1>Truck Hub</h1>
       {slots?.topArea}
 
@@ -173,7 +171,6 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
       </Scrollbar>
 
       {slots?.bottomArea}
-
     </>
   );
 }
