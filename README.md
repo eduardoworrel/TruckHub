@@ -6,14 +6,14 @@ Este projeto implementa o gerenciamento simples de caminhões.
 
 Clone o repositório
 ```cmd
-    git clone https://github.com/eduardoworrel/TruckHub
+git clone https://github.com/eduardoworrel/TruckHub
 ```
 
 Inicialize via docker compose
 
 ```cmd
-    cd TruckHub
-    docker compose up -d
+cd TruckHub
+docker compose up -d
 ```
 
 Acesse [http://localhost:3039](http://localhost:3039)
