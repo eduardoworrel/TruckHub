@@ -21,20 +21,20 @@ Acesse [http://localhost:3039](http://localhost:3039)
 🧪 Testes
 
 ```cmd
-    cd TruckHub/Backend
-    dotnet test
+cd TruckHub/Backend
+dotnet test
 ```
 
 
 Inicialização sem docker compose
 ```cmd
-    cd TruckHub/Backend/src/WebApi
-    mv appsettings.Example.json appsettings.json
-    dotnet run // https://localhost:7006/swagger
+cd TruckHub/Backend/src/WebApi
+mv appsettings.Example.json appsettings.json
+dotnet run // https://localhost:7006/swagger
 
-    cd TruckHub/Frontend/
-    npm install
-    npm run dev // http://localhost:3039
+cd TruckHub/Frontend/
+npm install
+npm run dev // http://localhost:3039
 ```
 
 
