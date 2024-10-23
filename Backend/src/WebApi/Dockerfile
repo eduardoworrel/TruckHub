@@ -15,7 +15,4 @@ COPY --from=build /out ./
 
 ENV ENV_PROJECT_NAME "./WebApi"
 
-RUN useradd -ms /bin/bash nonroot
-USER nonroot
-
 CMD "$ENV_PROJECT_NAME"

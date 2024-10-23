@@ -20,7 +20,7 @@ public static class DependencyInjection
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options
-                .UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure"))
+                .UseSqlite(connectionString, b => b.MigrationsAssembly("Infrastructure"))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
         );
 

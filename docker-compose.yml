@@ -2,8 +2,6 @@ services:
   api:
     container_name: api
     restart: always
-    depends_on: 
-      - db
     ports:
       - 7006:8080
     build:
@@ -11,19 +9,8 @@ services:
       dockerfile: ./WebApi/Dockerfile
     environment:
       TZ: America/Sao_Paulo
-  db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    restart: always
-    environment:
-      ACCEPT_EULA: y
-      SA_PASSWORD: k0eExD1W3or7
-      MSSQL_PID: Express
-      TZ: America/Sao_Paulo
-    ports: 
-    - 1433:1433
-    volumes:
-      - sql-storage:/var/opt/mssql
   frontend:
+    restart: always
     build:
       context: ./Frontend
     ports:

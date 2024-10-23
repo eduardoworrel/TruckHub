@@ -107,7 +107,7 @@ public sealed class TruckBusinessLogic(ITruckRepository _repository) : ITruckBus
             .RuleFor(r => r.PlantIsoCode, f => f.PickRandom<PlantLocation>());
 
         Random rnd = new();
-        var requests = faker.Generate(rnd.Next(25000, 100000));
+        var requests = faker.Generate(rnd.Next(2000, 10000));
         foreach (var truckRequest in requests)
         {
             var truck = Truck.Create(truckRequest);
