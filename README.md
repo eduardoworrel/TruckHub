@@ -1,1 +1,1 @@
-# TruckHub
+# TruckHub [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=eduardoworrel_TruckHub&metric=coverage)](https://sonarcloud.io/summary/new_code?id=eduardoworrel_TruckHub)
