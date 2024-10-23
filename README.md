@@ -26,15 +26,19 @@ dotnet test
 ```
 
 
-Inicialização sem docker compose
+## Executando localmente
+Backend:
 ```cmd
 cd TruckHub/Backend/src/WebApi
 mv appsettings.Example.json appsettings.json
-dotnet run # https://localhost:7006/swagger
+dotnet run
+```
 
+Frontend:
+```cmd
 cd TruckHub/Frontend/
 npm install
-npm run dev # http://localhost:3039
+npm run dev
 ```
 
 
