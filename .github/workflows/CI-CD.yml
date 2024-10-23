@@ -110,8 +110,6 @@ jobs:
     - name: Build and push Docker image
       run: |
          if [ ${{ github.ref }} = 'refs/heads/main' ]; then
-          docker compose -f docker-compose.prod.yml build api
-         else  
           docker compose -f docker-compose.yml build api
          fi
   deploy_frontend:
@@ -123,7 +121,5 @@ jobs:
     - name: Build and push Docker image
       run: |
          if [ ${{ github.ref }} = 'refs/heads/main' ]; then
-          docker compose -f docker-compose.prod.yml build frontend
-         else  
           docker compose -f docker-compose.yml build frontend
          fi
