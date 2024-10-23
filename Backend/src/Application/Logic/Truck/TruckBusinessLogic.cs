@@ -9,52 +9,50 @@ public sealed class TruckBusinessLogic(ITruckRepository _repository) : ITruckBus
 {
     private const int SIX_HOUR = -6;
     private const int ONE_HOUR = -1;
-public async Task<DashboardInfoResponse> GetDashboardInfo()
-{
-    var total = await _repository.GetCountAsync();
-    var trucksLast6Hours = await _repository.GetOldAsync(SIX_HOUR);
-    var trucksLast1Hour = await _repository.GetOldAsync(ONE_HOUR);
 
-    var plantCounts = trucksLast6Hours
-        .GroupBy(truck => truck.Plant)
-        .Select(group => new PlantCount(group.Key.GetDescription(), group.Count()))
-        .ToList();
+    public async Task<DashboardInfoResponse> GetDashboardInfo()
+    {
+        var total = await _repository.GetCountAsync();
+        var trucksLast6Hours = await _repository.GetOldAsync(SIX_HOUR);
+        var trucksLast1Hour = await _repository.GetOldAsync(ONE_HOUR);
 
-    var minuteCounts = trucksLast1Hour
-        .GroupBy(truck => truck.CreatedAt.ToString("HH:mm"))
-        .Select(group => new HourCount(
-            group.Key,
-            group.Count()
-        ))
-        .ToList();
+        var plantCounts = trucksLast6Hours
+            .GroupBy(truck => truck.Plant)
+            .Select(group => new PlantCount(group.Key.GetDescription(), group.Count()))
+            .ToList();
 
-    var detailedHourCounts = trucksLast6Hours
-        .GroupBy(truck => new
-        {
-            Time = new DateTime(
-                truck.CreatedAt.Year,
-                truck.CreatedAt.Month,
-                truck.CreatedAt.Day,
-                truck.CreatedAt.Hour,  // Agrupando por hora completa
-                0,  // Minutos zerados para considerar apenas a hora cheia
-                0
-            ),
-            truck.Model,
-        })
-        .Select(group => new DetailedHourCount(
-            group.Key.Time.ToString("HH:mm"),
-            group.Key.Model.GetDescription(),
-            group.Count()
-        ))
-        .ToList();
+        var minuteCounts = trucksLast1Hour
+            .GroupBy(truck => truck.CreatedAt.ToString("HH:mm"))
+            .Select(group => new HourCount(group.Key, group.Count()))
+            .ToList();
 
-    return new DashboardInfoResponse(
-        Total: total,
-        PlantCounts: plantCounts,
-        HourCounts: minuteCounts,
-        DetailedHourCounts: detailedHourCounts
-    );
-}
+        var detailedHourCounts = trucksLast6Hours
+            .GroupBy(truck => new
+            {
+                Time = new DateTime(
+                    truck.CreatedAt.Year,
+                    truck.CreatedAt.Month,
+                    truck.CreatedAt.Day,
+                    truck.CreatedAt.Hour, // Agrupando por hora completa
+                    0, // Minutos zerados para considerar apenas a hora cheia
+                    0
+                ),
+                truck.Model,
+            })
+            .Select(group => new DetailedHourCount(
+                group.Key.Time.ToString("HH:mm"),
+                group.Key.Model.GetDescription(),
+                group.Count()
+            ))
+            .ToList();
+
+        return new DashboardInfoResponse(
+            Total: total,
+            PlantCounts: plantCounts,
+            HourCounts: minuteCounts,
+            DetailedHourCounts: detailedHourCounts
+        );
+    }
 
     public async Task<List<TrucksResponse>> GetAll()
     {

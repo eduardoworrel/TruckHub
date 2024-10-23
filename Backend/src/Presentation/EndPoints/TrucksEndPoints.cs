@@ -40,14 +40,14 @@ public static class TrucksEndPoints
 
     public static async Task<IResult> Generate100([FromServices] ITruckBusinessLogic _logic)
     {
-        // try
-        // {
-        return Results.Ok(await _logic.GenerateAndAdd100Trucks());
-        // }
-        // catch (Exception ex)
-        // {
-        //     return Results.BadRequest(ex.Message);
-        // }
+        try
+        {
+            return Results.Ok(await _logic.GenerateAndAdd100Trucks());
+        }
+        catch (Exception ex)
+        {
+            return Results.BadRequest(ex.Message);
+        }
     }
 
     public static async Task<IResult> DeleteRange(
