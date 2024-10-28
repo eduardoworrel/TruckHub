@@ -53,7 +53,7 @@ npm run dev
 - .NET 8
     - Code First.
     - Entity Framework
-    - Migratins
+    - Migrations
 - SQLite (banco de dados local)
 - React & Typescript
     - Material UI
